@@ -55,8 +55,8 @@ Puppet::Type.type(:proxy_mysql_user).provide(:proxysql, parent: Puppet::Provider
     schema_locked = @resource.value(:schema_locked) || 0
     transaction_persistent = @resource.value(:transaction_persistent) || 1
     fast_forward = @resource.value(:fast_forward) || 0
-    backend = @resource.value(:backend) || 1
-    frontend = @resource.value(:frontend) || 1
+    backend = @resource.value(:backend)
+    frontend = @resource.value(:frontend)
     max_connections = @resource.value(:max_connections) || 10_000
 
     query = 'INSERT INTO mysql_users (`username`, `password`, `active`, `use_ssl`, `default_hostgroup`, `default_schema`, '
