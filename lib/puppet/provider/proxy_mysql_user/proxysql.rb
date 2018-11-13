@@ -61,21 +61,13 @@ Puppet::Type.type(:proxy_mysql_user).provide(:proxysql, parent: Puppet::Provider
 
     query = 'INSERT INTO mysql_users (`username`, `password`, `active`, `use_ssl`, `default_hostgroup`, `default_schema`, '
     query << ' `schema_locked`, `transaction_persistent`, `fast_forward`, '
-    if defined?(backend).nil?
-      query << ' `backend`,'
-    end
-    if defined?(frontend).nil?
-      query << ' `frontend`,'
-    end
+    query << ' `backend`,' if defined?(backend).nil?
+    query << ' `frontend`,' if defined?(frontend).nil?
     query << ' `max_connections`)'
     query << " VALUES ('#{name}', '#{password}', #{active}, #{use_ssl}, #{default_hostgroup}, '#{default_schema}', "
     query << " #{schema_locked}, #{transaction_persistent}, #{fast_forward}, "
-    if defined?(backend).nil?
-      query << " #{backend},"
-    end
-    if defined?(frontend).nil?
-      query << " #{frontend},"
-    end
+    query << " #{backend}," if defined?(backend).nil?
+    query << " #{frontend}," if defined?(frontend).nil?
     query << " #{max_connections})"
     mysql([defaults_file, '-e', query].compact)
     @property_hash[:ensure] = :present
