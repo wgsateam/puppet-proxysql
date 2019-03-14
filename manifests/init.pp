@@ -118,6 +118,9 @@
 # * `mysql_client_package_name`
 #   The name of the mysql client package in your package manager. Defaults to undef
 #
+# * `install_mysql_client`
+#   Determines whether mysql client will be installed. Defaults to true
+#
 # * `manage_hostgroup_for_servers`
 #   Determines wheter this module will manage hostgroup_id for mysql_servers.
 #   If false - it will skip difference in this value between manifest and defined in ProxySQL. Defaults to 'true'
@@ -151,6 +154,7 @@ class proxysql (
   Optional[String] $cluster_name = $proxysql::params::cluster_name,
   String $package_name = $proxysql::params::package_name,
   Optional[String] $mysql_client_package_name = $proxysql::params::mysql_client_package_name,
+  Boolean $install_mysql_client = $proxysql::params::install_mysql_client,
   String $package_ensure = $proxysql::params::package_ensure,
   Array[String] $package_install_options = $proxysql::params::package_install_options,
   String $service_name = $proxysql::params::service_name,

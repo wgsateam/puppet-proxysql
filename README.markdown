@@ -363,6 +363,9 @@ The password ProxySQL will use to connect to the configured mysql_clusters. Defa
 ##### `mysql_client_package_name`
 The name of the mysql client package in your package manager. Defaults to undef
 
+##### `install_mysql_client`
+Determines whether mysql client will be installed. Defaults to true
+
 ##### `manage_hostgroup_for_servers`
 Determines wheter this module will manage hostgroup_id for mysql_servers.
 If false - it will skip difference in this value between manifest and defined in ProxySQL. Defaults to 'true'
