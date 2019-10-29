@@ -38,6 +38,11 @@ Puppet::Type.newtype(:proxy_mysql_query_rule) do
     newvalue(%r{[01]})
   end
 
+  newproperty(:gtid_from_hostgroup) do
+    desc 'Which hostgroup take gtid from.'
+    newvalue(%r{[01]})
+  end
+
   newproperty(:username) do
     desc 'Username to apply this rule to.'
     newvalue(%r{\w+})
