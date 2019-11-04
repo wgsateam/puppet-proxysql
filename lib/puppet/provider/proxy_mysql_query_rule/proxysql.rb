@@ -6,7 +6,7 @@ Puppet::Type.type(:proxy_mysql_query_rule).provide(:proxysql, parent: Puppet::Pr
   # Build a property_hash containing all the discovered information about query rules.
   def self.instances
     instances = []
-    rules = mysql([defaults_file, '-NBe',
+    rules = mysql([defaults_file, '-NBre',
                    'SELECT `rule_id` FROM `mysql_query_rules`'].compact).split(%r{\n})
 
     # To reduce the number of calls to MySQL we collect all the properties in
@@ -23,7 +23,7 @@ Puppet::Type.type(:proxy_mysql_query_rule).provide(:proxysql, parent: Puppet::Pr
       @client_addr, @proxy_addr, @proxy_port, @destination_hostgroup,
       @digest, @match_digest, @match_pattern, @negate_match_pattern, @replace_pattern,
       @cache_ttl, @reconnect, @timeout, @retries, @delay, @error_msg, @log, @comment,
-      @mirror_flag_out, @mirror_hostgroup, @gtid_from_hostgroup = mysql([defaults_file, '-NBe', query].compact).chomp.split(%r{\t})
+      @mirror_flag_out, @mirror_hostgroup, @gtid_from_hostgroup = mysql([defaults_file, '-NBre', query].compact).chomp.split(%r{\t})
       name = "mysql_query_rule-#{rule_id}"
 
       instances << new(
@@ -140,10 +140,10 @@ Puppet::Type.type(:proxy_mysql_query_rule).provide(:proxysql, parent: Puppet::Pr
     @property_hash.clear
 
     load_to_runtime = @resource[:load_to_runtime]
-    mysql([defaults_file, '-NBe', 'LOAD MYSQL QUERY RULES TO RUNTIME'].compact) if load_to_runtime == :true
+    mysql([defaults_file, '-NBre', 'LOAD MYSQL QUERY RULES TO RUNTIME'].compact) if load_to_runtime == :true
 
     save_to_disk = @resource[:save_to_disk]
-    mysql([defaults_file, '-NBe', 'SAVE MYSQL QUERY RULES TO DISK'].compact) if save_to_disk == :true
+    mysql([defaults_file, '-NBre', 'SAVE MYSQL QUERY RULES TO DISK'].compact) if save_to_disk == :true
   end
 
   def update_query_rule(properties)
