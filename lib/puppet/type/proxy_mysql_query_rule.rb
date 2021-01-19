@@ -162,4 +162,9 @@ Puppet::Type.newtype(:proxy_mysql_query_rule) do
     desc 'free form text field, usable for a descriptive comment of the query rule.'
     newvalue(%r{[\w+]})
   end
+  
+  newproperty(:multiplex) do
+    desc 'see https://github.com/sysown/proxysql/wiki/Multiplexing.'
+    newvalue(%r{[012]})
+  end
 end
