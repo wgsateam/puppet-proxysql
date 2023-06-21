@@ -191,7 +191,7 @@ class proxysql (
   Boolean $load_to_runtime = $proxysql::params::load_to_runtime,
   Boolean $save_to_disk = $proxysql::params::save_to_disk,
 
-  Boolean $manage_repo = true,
+  Boolean $manage_repo = $proxysql::params::manage_repo,
   Hash $repo = $proxysql::params::repo,
 
   String $permissions = $proxysql::params::permissions,
