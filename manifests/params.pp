@@ -6,6 +6,7 @@
 class proxysql::params {
   $package_name  = 'proxysql'
   $mysql_client_package_name = undef
+  $mysql_client_repo = undef
   $install_mysql_client = true
 
   $package_ensure = 'installed'
@@ -97,13 +98,19 @@ class proxysql::params {
     }
     'RedHat': {
       $package_provider = 'rpm'
-      $package_source   = 'https://github.com/sysown/proxysql/releases/download/v1.4.11/proxysql-1.4.11-1-centos67.x86_64.rpm'
+      if "${::osfamily}${::operatingsystemmajrelease}" =='RedHat9' {
+        $package_source   = 'http://repo.proxysql.com/ProxySQL/proxysql-2.4.x/almalinux/9/proxysql-2.4.2-1-almalinux9.x86_64.rpm'
+        $baseurl  = 'http://repo.proxysql.com/ProxySQL/proxysql-2.4.x/almalinux/$releasever'
+      } else {
+        $package_source   = 'https://github.com/sysown/proxysql/releases/download/v1.4.11/proxysql-1.4.11-1-centos67.x86_64.rpm'
+        $baseurl  = 'http://repo.proxysql.com/ProxySQL/proxysql-1.4.x/centos/$releasever'
+      }
       $package_checksum_value = '6f302beaea096b63851a136287818a1b6e049e28'
       $package_checksum_type = 'sha1'
       $package_dependencies = ['perl-DBI', 'perl-DBD-mysql']
       $repo             = {
         descr    => 'ProxySQL YUM repository',
-        baseurl  => 'http://repo.proxysql.com/ProxySQL/proxysql-1.4.x/centos/$releasever',
+        baseurl  => $baseurl,
         enabled  => true,
         gpgcheck => true,
         gpgkey   => 'http://repo.proxysql.com/ProxySQL/repo_pub_key',

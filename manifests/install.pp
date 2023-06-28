@@ -45,9 +45,17 @@ class proxysql::install {
   }
 
   if $proxysql::install_mysql_client {
-    class { '::mysql::client':
-      package_name    => $proxysql::mysql_client_package_name,
-      bindings_enable => false,
+    if $proxysql::mysql_client_repo != undef {
+      class { '::mysql::client':
+        package_name    => $proxysql::mysql_client_package_name,
+        bindings_enable => false,
+        require         => Class[ $proxysql::mysql_client_repo ],
+      }
+    } else {
+      class { '::mysql::client':
+        package_name    => $proxysql::mysql_client_package_name,
+        bindings_enable => false,
+      }
     }
   }
 

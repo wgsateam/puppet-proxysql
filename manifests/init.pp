@@ -155,6 +155,7 @@ class proxysql (
   String $package_name = $proxysql::params::package_name,
   Optional[String] $mysql_client_package_name = $proxysql::params::mysql_client_package_name,
   Boolean $install_mysql_client = $proxysql::params::install_mysql_client,
+  Optional[String] $mysql_client_repo = $proxysql::params::mysql_client_repo,
   String $package_ensure = $proxysql::params::package_ensure,
   Array[String] $package_install_options = $proxysql::params::package_install_options,
   String $service_name = $proxysql::params::service_name,
@@ -191,7 +192,7 @@ class proxysql (
   Boolean $load_to_runtime = $proxysql::params::load_to_runtime,
   Boolean $save_to_disk = $proxysql::params::save_to_disk,
 
-  Boolean $manage_repo = $proxysql::params::manage_repo,
+  Boolean $manage_repo = true,
   Hash $repo = $proxysql::params::repo,
 
   String $permissions = $proxysql::params::permissions,
